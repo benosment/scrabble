@@ -21,14 +21,28 @@ import scrabble
 
 class TestScrabble(unittest.TestCase):
 
+    def setUp(self):
+        self.words = scrabble.build_wordlist(os.path.join(tests_dir,
+                                                          'test_wordlist.txt'))
+        self.letters = 'DOGCAT'
+        
     def test_wordlist(self):
         correct_words = ['dog', 'cat', 'rabbit']
-        words = scrabble.build_wordlist(os.path.join(tests_dir, 'test_wordlist.txt'))
-        self.assertEquals(words, correct_words)
+        self.assertEquals(self.words, correct_words)
 
     def test_highest(self):
+        # self.assertEquals(scrabble.find_highest(self.letters,
+        #                                         self.words), 'DOG')
         pass
-
+        
+    def test_wordscore(self):
+        self.assertEquals(scrabble.get_word_score('faze'), 16)
+        self.assertEquals(scrabble.get_word_score('fiz'), 15)
+        self.assertEquals(scrabble.get_word_score('ben'), 5)
+        
+    def test_creatable(self):
+        pass
+        
 
 if __name__ == '__main__':
 

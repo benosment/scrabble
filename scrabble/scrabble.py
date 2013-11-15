@@ -8,6 +8,33 @@
 import argparse
 import logging
 
+scores = {"a": 1,
+          "b": 3,          
+          "c": 3,
+          "d": 2,          
+          "e": 1,
+          "f": 4,
+          "g": 2,
+          "h": 4,
+          "i": 1,
+          "j": 8,
+          "k": 5,
+          "l": 1,
+          "m": 3,
+          "n": 1,
+          "o": 1,
+          "p": 3,
+          "q": 10,
+          "r": 1,
+          "s": 1,
+          "t": 1,
+          "u": 1,
+          "v": 4,
+          "w": 4,
+          "x": 8,
+          "y": 4,
+          "z": 10}
+
 
 def parse_args():
     # build the command line parser, setup the logger
@@ -42,9 +69,18 @@ def build_wordlist(filename):
     return words
 
 
-def find_highest(filename):
-    pass
+def find_highest(wordlist, letters):
+    # form a list of tuples which are creatable
+    creatable_words = [(word, get_word_score(word))
+                       for word in wordlist if creatable(word, letters)]    
+    # return a sorted list 
+    return creatable_words.sort()[0]
+    
+def get_word_score(word):
+    return sum([scores[letter] for letter in word])
 
+def creatable(word, letters):
+    pass
 
 def main():
     # parse the args
