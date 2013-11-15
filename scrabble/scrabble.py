@@ -8,13 +8,20 @@
 import argparse
 import logging
 
+
 def parse_args():
     # build the command line parser, setup the logger
-    parser = argparse.ArgumentParser(description='given a set of letters, return the highest scoring word')
+    parser = argparse.ArgumentParser(description='given a set of letters,'
+                                     'return the highest scoring word')
     parser.add_argument('letters',
                         action='store',
                         nargs='+',
                         help='letters to construct word out of')
+    parser.add_argument('-w',
+                        '--wordlist_filename',
+                        help='wordlist to use',
+                        action='store',
+                        default='../resources/sowpods-wordlist.txt')
     parser.add_argument('--debug', action='store_true',
                         help='display debug information')
     args = parser.parse_args()
@@ -27,10 +34,21 @@ def parse_args():
     return args
 
 
+def build_wordlist(filename):
+    pass
+
+def find_highest(filename):
+    pass
+
+    
 def main():
+    # parse the args
     args = parse_args()
+    # generate the list of acceptable words
+    wordlist = build_wordlist(args.wordlist_filename)
+    # find the highest words
+    find_highest(args.letters, wordlist)
 
 
 if __name__ == '__main__':
     main()
-
