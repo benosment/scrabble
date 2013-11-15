@@ -35,12 +35,17 @@ def parse_args():
 
 
 def build_wordlist(filename):
-    pass
+    ''' reads in a file which contains one word on a line, returns
+        a list of all of the words'''
+    with open(filename) as f:
+        words = [line.strip() for line in f.readlines()]
+    return words
+
 
 def find_highest(filename):
     pass
 
-    
+
 def main():
     # parse the args
     args = parse_args()
