@@ -58,6 +58,8 @@ def parse_args():
     else:
         logging.basicConfig(level=logging.INFO,
                             format='%(message)s')
+    # lowercase all letters
+    args.letters = args.letters[0].lower()
     return args
 
 
@@ -65,21 +67,44 @@ def build_wordlist(filename):
     ''' reads in a file which contains one word on a line, returns
         a list of all of the words'''
     with open(filename) as f:
-        words = [line.strip() for line in f.readlines()]
+        words = [line.strip().lower() for line in f.readlines()]
     return words
 
 
-def find_highest(wordlist, letters):
+def find_highest(letters, wordlist):
     # form a list of tuples which are creatable
-    creatable_words = [(word, get_word_score(word))
-                       for word in wordlist if creatable(word, letters)]
-    # return a sorted list
-    return creatable_words.sort()[0]
+    creatable_words = get_creatable_words(letters, wordlist)
+    highest_word = None
+    highest_score = None
+    for word_score in creatable_words:
+        w, s = word_score
+        if s > highest_score:
+            highest_score = s
+            highest_word = w
+    return highest_word
+
+
+def all_scores(letters, wordlist):
+    # form a list of tuples which are creatable
+    creatable_words = get_creatable_words(letters, wordlist)
+    creatable_words.sort(key=lambda t: t[1], reverse=True)
+    return creatable_words
+
+
+def get_creatable_words(letters, wordlist):
+    return [(word, get_word_score(word))
+            for word in wordlist if creatable(word, letters)]
 
 
 def get_word_score(word):
     ''' Returns a cumulative score for Scrabble words '''
     return sum([scores[letter] for letter in word])
+
+
+def print_all_scores(word_scores):
+    for word_score in word_scores:
+        word, score = word_score
+        print score, word
 
 
 def creatable(word, letters):
@@ -100,7 +125,8 @@ def main():
     # generate the list of acceptable words
     wordlist = build_wordlist(args.wordlist_filename)
     # find the highest words
-    find_highest(args.letters, wordlist)
+    #find_highest(args.letters, wordlist)
+    print_all_scores(all_scores(args.letters, wordlist))
 
 
 if __name__ == '__main__':
