@@ -42,7 +42,6 @@ def parse_args():
                                      'return the highest scoring word')
     parser.add_argument('letters',
                         action='store',
-                        nargs='+',
                         help='letters to construct word out of')
     parser.add_argument('-w',
                         '--wordlist_filename',
@@ -59,7 +58,7 @@ def parse_args():
         logging.basicConfig(level=logging.INFO,
                             format='%(message)s')
     # lowercase all letters
-    args.letters = args.letters[0].lower()
+    args.letters = args.letters.lower()
     return args
 
 
