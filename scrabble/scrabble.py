@@ -9,9 +9,9 @@ import argparse
 import logging
 
 scores = {"a": 1,
-          "b": 3,          
+          "b": 3,
           "c": 3,
-          "d": 2,          
+          "d": 2,
           "e": 1,
           "f": 4,
           "g": 2,
@@ -72,15 +72,27 @@ def build_wordlist(filename):
 def find_highest(wordlist, letters):
     # form a list of tuples which are creatable
     creatable_words = [(word, get_word_score(word))
-                       for word in wordlist if creatable(word, letters)]    
-    # return a sorted list 
+                       for word in wordlist if creatable(word, letters)]
+    # return a sorted list
     return creatable_words.sort()[0]
-    
+
+
 def get_word_score(word):
+    ''' Returns a cumulative score for Scrabble words '''
     return sum([scores[letter] for letter in word])
 
+
 def creatable(word, letters):
-    pass
+    ''' Returns True if a word can be constructed given the letters
+        returns False otherwise'''
+    letter_list = list(letters)
+    for letter in word:
+        if letter in letter_list:
+            letter_list.remove(letter)
+        else:
+            return False
+    return True
+
 
 def main():
     # parse the args

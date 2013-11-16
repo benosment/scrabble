@@ -25,7 +25,7 @@ class TestScrabble(unittest.TestCase):
         self.words = scrabble.build_wordlist(os.path.join(tests_dir,
                                                           'test_wordlist.txt'))
         self.letters = 'DOGCAT'
-        
+
     def test_wordlist(self):
         correct_words = ['dog', 'cat', 'rabbit']
         self.assertEquals(self.words, correct_words)
@@ -34,15 +34,16 @@ class TestScrabble(unittest.TestCase):
         # self.assertEquals(scrabble.find_highest(self.letters,
         #                                         self.words), 'DOG')
         pass
-        
+
     def test_wordscore(self):
         self.assertEquals(scrabble.get_word_score('faze'), 16)
         self.assertEquals(scrabble.get_word_score('fiz'), 15)
         self.assertEquals(scrabble.get_word_score('ben'), 5)
-        
+
     def test_creatable(self):
-        pass
-        
+        self.assertTrue(scrabble.creatable('hat', 'aahhtt'))
+        self.assertFalse(scrabble.creatable('noon', 'nott'))
+
 
 if __name__ == '__main__':
 
